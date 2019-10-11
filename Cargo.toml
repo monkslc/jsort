@@ -1,0 +1,7 @@
+[package]
+name = "jsort"
+version = "0.1.0"
+authors = ["Connor Monks <monkslc@gmail.com>"]
+edition = "2018"
+
+[dependencies]
