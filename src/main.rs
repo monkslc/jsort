@@ -1,5 +1,4 @@
-use serde_json::Value;
-use std::collections::HashMap;
+use serde_json::{Map, Value};
 use std::io::{self, Read};
 
 fn main() {
@@ -9,21 +8,50 @@ fn main() {
         .read_to_string(&mut data)
         .expect("Couldn't read from stdin");
 
-    let json: HashMap<String, Value> =
+    let json: Map<String, Value> =
         serde_json::from_str(&data[..]).expect("Couldn't deserialize here");
 
+    sort_and_print_json(&json, 0);
+
+    // Print new line at the end
+    println!("");
+}
+
+fn sort_and_print_json(json: &Map<String, Value>, indent_level: u32) {
+    println!("{{");
     let mut keys = Vec::new();
     for key in json.keys() {
-        keys.push(key)
+        keys.push(key);
     }
-
     keys.sort();
-
-    println!("{{");
+    let mut counter = 1;
+    let len = keys.len();
     for key in keys {
-        // In here we add a check if the json value is a hash map
-        // If so, we need to loop through those keys and do the same process
-        println!("\t{}: {}", key, json[key]);
+        if let Value::Object(obj) = &json[key] {
+            for _ in 0..indent_level + 1 {
+                print!("\t");
+            }
+            print!("{}: ", key);
+            sort_and_print_json(obj, indent_level + 1);
+            if counter != len {
+                println!(",");
+            };
+        } else {
+            for _ in 0..indent_level + 1 {
+                print!("\t");
+            }
+            if counter == len {
+                println!("{}: {}", key, json[key]);
+            } else {
+                println!("{}: {},", key, json[key]);
+            }
+        }
+        counter += 1
     }
-    println!("}}");
+
+    for _ in 0..indent_level {
+        print!("\t");
+    }
+
+    print!("}}");
 }
