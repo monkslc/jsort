@@ -11,47 +11,50 @@ fn main() {
     let json: Map<String, Value> =
         serde_json::from_str(&data[..]).expect("Couldn't deserialize here");
 
-    sort_and_print_json(&json, 0);
-
-    // Print new line at the end
-    println!("");
+    let pretty_json = sort_json(&json, data.len());
+    println!("{}", pretty_json);
 }
 
-fn sort_and_print_json(json: &Map<String, Value>, indent_level: u32) {
-    println!("{{");
+fn sort_json(json: &Map<String, Value>, len: usize) -> String {
+    let mut pretty_sorted_json = String::with_capacity(len);
+    sort_json_recursive(json, 0, &mut pretty_sorted_json);
+
+    pretty_sorted_json
+}
+
+fn sort_json_recursive(
+    json: &Map<String, Value>,
+    indent_level: usize,
+    pretty_sorted_json: &mut String,
+) {
+    pretty_sorted_json.push_str("{\n");
     let mut keys = Vec::new();
     for key in json.keys() {
         keys.push(key);
     }
     keys.sort();
+
     let mut counter = 1;
     let len = keys.len();
     for key in keys {
         if let Value::Object(obj) = &json[key] {
-            for _ in 0..indent_level + 1 {
-                print!("\t");
-            }
-            print!("{}: ", key);
-            sort_and_print_json(obj, indent_level + 1);
+            pretty_sorted_json.push_str(&"\t".repeat(indent_level + 1)[..]);
+            pretty_sorted_json.push_str(&format!("{}: ", key)[..]);
+            sort_json_recursive(obj, indent_level + 1, pretty_sorted_json);
             if counter != len {
-                println!(",");
+                pretty_sorted_json.push_str(",\n");
             };
         } else {
-            for _ in 0..indent_level + 1 {
-                print!("\t");
-            }
+            pretty_sorted_json.push_str(&"\t".repeat(indent_level + 1)[..]);
             if counter == len {
-                println!("{}: {}", key, json[key]);
+                pretty_sorted_json.push_str(&format!("{}: {}\n", key, json[key])[..]);
             } else {
-                println!("{}: {},", key, json[key]);
+                pretty_sorted_json.push_str(&format!("{}: {},\n", key, json[key])[..]);
             }
         }
         counter += 1
     }
 
-    for _ in 0..indent_level {
-        print!("\t");
-    }
-
-    print!("}}");
+    pretty_sorted_json.push_str(&"\t".repeat(indent_level)[..]);
+    pretty_sorted_json.push_str("}");
 }
