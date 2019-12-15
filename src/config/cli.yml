@@ -1,0 +1,9 @@
+name: jsort
+version: "0.1.0"
+author: Connor M. <monkslc@gmail.com>
+about: Formats JSON
+args:
+    - File:
+        help: Sets the json file to read from
+        required: false
+        index: 1
