@@ -1,1 +1,2 @@
-{ "first": "Jane", "last": "Doe", "favorite_foods": ["Pizza", "Pie", "Potatoes"] }
+[{ "first": "Jane", "last": "Doe", "favorite_foods": ["Pizza", "Pie", "Potatoes"] },
+{ "first": "Jimbo", "last": "Slice", "favorite_foods": ["Pizza", "Bagels", "Potatoes"] }]

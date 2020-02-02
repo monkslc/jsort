@@ -1,9 +1,20 @@
-{
-  "favorite_foods": [
-    "Pizza",
-    "Pie",
-    "Potatoes"
-  ],
-  "first": "Jane",
-  "last": "Doe"
-}
+[
+  {
+    "favorite_foods": [
+      "Pizza",
+      "Pie",
+      "Potatoes"
+    ],
+    "first": "Jane",
+    "last": "Doe"
+  },
+  {
+    "favorite_foods": [
+      "Pizza",
+      "Bagels",
+      "Potatoes"
+    ],
+    "first": "Jimbo",
+    "last": "Slice"
+  }
+]

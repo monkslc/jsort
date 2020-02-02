@@ -68,6 +68,14 @@ mod tests {
     }
 
     #[test]
+    fn json_with_array_test() {
+        test_json_files(
+            String::from("json_with_array.json"),
+            String::from("json_with_array_verify.json"),
+        );
+    }
+
+    #[test]
     fn array_json_test() {
         test_json_files(
             String::from("array.json"),
