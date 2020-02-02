@@ -1,6 +1,9 @@
 # jsort
 A command-line tool to format json
 
+### Install
+`cargo install --git https://github.com/monkslc/jsort`
+
 ### Examples
 **Passing in a file**
 ```
